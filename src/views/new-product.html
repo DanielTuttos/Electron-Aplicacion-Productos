@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Add A New Product</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+</head>
+
+<body>
+
+    <form class="p-4">
+        <div class="form-group">
+            <input type="text" name="" id="name" class="form-control" placeholder="Products Name" autofocus>
+        </div>
+
+        <div class="form-group">
+            <input id="price" class="form-control" type="text" placeholder="Price">
+        </div>
+
+        <div class="form-group">
+            <input type="text" name="" id="description" class="form-control" placeholder="Description of Product">
+        </div>
+        <button class="btn btn-primary btn-block">
+            Save Product
+        </button>
+    </form>
+
+
+    <script src="js/jquery.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+
+
+    <script>
+
+        const { ipcRenderer } = require('electron');
+
+        const form = document.querySelector('form');
+        form.addEventListener('submit', e => {
+            const nameProduct = document.querySelector('#name').value;
+            const priceProduct = document.querySelector('#price').value;
+            const descriptionProduct = document.querySelector('#description').value;
+
+            const newProduct = {
+                name: nameProduct,
+                price: priceProduct,
+                desription: descriptionProduct
+            }
+
+            //console.log(nameProduct,priceProduct,descriptionProduct);
+            ipcRenderer.send('product:new',newProduct);
+            e.preventDefault();
+        });
+    </script>
+</body>
+
+</html>
